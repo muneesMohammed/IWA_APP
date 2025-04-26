@@ -24,12 +24,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+          cache: 'npm'
       
-      - name: Install dependencies and build
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: |
+            ./frontend/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      
+      - name: Install dependencies
         working-directory: ./frontend
-        run: |
-          npm install
-          npm run build -- --configuration=production
+        run: npm ci
       
       - name: Build And Deploy
         id: builddeploy
@@ -40,8 +50,9 @@ jobs:
           action: "upload"
           app_location: "./frontend"
           api_location: ""
-          output_location: "dist/iwa-app/browser"  # Updated to point to browser directory
+          output_location: "dist/iwa-app/browser"
           app_build_command: "npm run build -- --configuration=production"
+          skip_app_build: false  # Explicitly set to ensure build runs
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
