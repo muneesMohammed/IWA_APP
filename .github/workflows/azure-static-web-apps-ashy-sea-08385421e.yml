@@ -109,7 +109,7 @@ jobs:
           action: "upload"
           app_location: "frontend/dist/iwa-app/browser"  # Directly use prerendered output
           output_location: ""  # Empty because we're using the exact output structure
-          routes_location: "frontend/dist/iwa-app/browser/staticwebapp.config.json"
+          routes_location: "frontend/dist/iwa-app/prerendered-routes.json"
           skip_app_build: true
 
   close_pull_request_job:
