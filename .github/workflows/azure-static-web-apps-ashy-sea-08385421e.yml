@@ -31,74 +31,63 @@ jobs:
         working-directory: ./frontend
         run: npm ci
       
-      - name: Build Angular app with prerendering
+      - name: Build Angular app
         working-directory: ./frontend
         run: |
           npm run build -- --configuration=production
           
-          # Create deployment folder
-          mkdir -p dist/deploy
+          # Verify build output structure
+          echo "Build output:"
+          find dist/iwa-app -type f
           
-          # Copy all prerendered files
-          cp -r dist/iwa-app/browser/* dist/deploy/
-          
-          # Ensure index.html exists (rename if needed)
-          [ -f "dist/deploy/index.csr.html" ] && mv dist/deploy/index.csr.html dist/deploy/index.html
-          
-          echo "Prerendered routes detected:"
-          cat dist/iwa-app/prerendered-routes.json
+          # Ensure index.html exists in browser folder
+          if [ -f "dist/iwa-app/browser/index.csr.html" ]; then
+            mv dist/iwa-app/browser/index.csr.html dist/iwa-app/browser/index.html
+          fi
 
-      - name: Generate Azure routes configuration
+      - name: Create Azure configuration
         working-directory: ./frontend
         run: |
-          # Create staticwebapp.config.json with all prerendered routes
-          cat > dist/deploy/staticwebapp.config.json << 'EOL'
+          # Create staticwebapp.config.json in the browser folder
+          cat > dist/iwa-app/browser/staticwebapp.config.json << 'EOL'
           {
             "routes": [
               {
                 "route": "/",
-                "serve": "/index.html",
-                "statusCode": 200
+                "serve": "/index.html"
               },
               {
                 "route": "/Home",
-                "serve": "/Home/index.html",
-                "statusCode": 200
+                "serve": "/Home/index.html"
               },
               {
                 "route": "/about",
-                "serve": "/about/index.html",
-                "statusCode": 200
+                "serve": "/about/index.html"
               },
               {
                 "route": "/blog",
-                "serve": "/blog/index.html",
-                "statusCode": 200
+                "serve": "/blog/index.html"
               },
               {
                 "route": "/contact",
-                "serve": "/contact/index.html",
-                "statusCode": 200
+                "serve": "/contact/index.html"
               },
               {
                 "route": "/news",
-                "serve": "/news/index.html",
-                "statusCode": 200
+                "serve": "/news/index.html"
               },
               {
                 "route": "/news-details",
-                "serve": "/news-details/index.html",
-                "statusCode": 200
+                "serve": "/news-details/index.html"
               },
               {
                 "route": "/*",
-                "serve": "/index.html",
-                "statusCode": 200
+                "serve": "/index.html"
               }
             ],
             "navigationFallback": {
               "rewrite": "/index.html",
-              "exclude": ["/assets/*", "/*.css", "/*.js"]
+              "exclude": ["/assets/*", "/*.css", "/*.js", "/*.json"]
             },
             "responseOverrides": {
               "404": {
@@ -108,19 +97,19 @@ jobs:
           }
           EOL
           
-          echo "Azure Static Web Apps configuration:"
-          cat dist/deploy/staticwebapp.config.json
+          echo "Azure configuration:"
+          cat dist/iwa-app/browser/staticwebapp.config.json
 
-      - name: Deploy to Azure
+      - name: Deploy to Azure Static Web Apps
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_SEA_08385421E }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "frontend/dist/deploy"
-          output_location: ""
-          routes_location: "frontend/dist/deploy/staticwebapp.config.json"
+          app_location: "frontend/dist/iwa-app/browser"  # Directly use prerendered output
+          output_location: ""  # Empty because we're using the exact output structure
+          routes_location: "frontend/dist/iwa-app/browser/staticwebapp.config.json"
           skip_app_build: true
 
   close_pull_request_job:
