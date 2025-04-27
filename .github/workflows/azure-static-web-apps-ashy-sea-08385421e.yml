@@ -25,15 +25,16 @@ jobs:
         with:
           node-version: '18.x'
           cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'  # Point to your lock file
       
       - name: Cache npm dependencies
         uses: actions/cache@v3
         id: npm-cache
         with:
           path: |
-            ./frontend/node_modules
+            frontend/node_modules
             ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
       
@@ -52,7 +53,6 @@ jobs:
           api_location: ""
           output_location: "dist/iwa-app/browser"
           app_build_command: "npm run build -- --configuration=production"
-          skip_app_build: false  # Explicitly set to ensure build runs
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
