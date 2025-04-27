@@ -31,47 +31,63 @@ jobs:
         working-directory: ./frontend
         run: npm ci
       
-      - name: Build Angular app
+      - name: Build Angular app with prerendering
         working-directory: ./frontend
         run: |
-          # Build the application
           npm run build -- --configuration=production
           
-          # Debug: Show directory structure
-          echo "Build output structure:"
-          find dist -type f
-          
-          # Prepare deployment folder
+          # Create deployment folder
           mkdir -p dist/deploy
           
-          # Copy all browser files to deploy folder
-          if [ -d "dist/iwa-app/browser" ]; then
-            cp -r dist/iwa-app/browser/* dist/deploy/
-          else
-            cp -r dist/iwa-app/* dist/deploy/
-          fi
+          # Copy all prerendered files
+          cp -r dist/iwa-app/browser/* dist/deploy/
           
-          # Ensure all HTML files are accessible
-          find dist/deploy -name "*.html" -exec chmod 644 {} \;
+          # Ensure index.html exists (rename if needed)
+          [ -f "dist/deploy/index.csr.html" ] && mv dist/deploy/index.csr.html dist/deploy/index.html
           
-          echo "Final deployment structure:"
-          find dist/deploy -type f
+          echo "Prerendered routes detected:"
+          cat dist/iwa-app/prerendered-routes.json
 
-      - name: Configure routes for multi-page app
+      - name: Generate Azure routes configuration
         working-directory: ./frontend
         run: |
-          # Create routes.json for Azure Static Web Apps
-          cat > dist/deploy/routes.json << 'EOL'
+          # Create staticwebapp.config.json with all prerendered routes
+          cat > dist/deploy/staticwebapp.config.json << 'EOL'
           {
             "routes": [
+              {
+                "route": "/",
+                "serve": "/index.html",
+                "statusCode": 200
+              },
               {
                 "route": "/Home",
                 "serve": "/Home/index.html",
                 "statusCode": 200
               },
               {
-                "route": "/About",
-                "serve": "/About/index.html",
+                "route": "/about",
+                "serve": "/about/index.html",
+                "statusCode": 200
+              },
+              {
+                "route": "/blog",
+                "serve": "/blog/index.html",
+                "statusCode": 200
+              },
+              {
+                "route": "/contact",
+                "serve": "/contact/index.html",
+                "statusCode": 200
+              },
+              {
+                "route": "/news",
+                "serve": "/news/index.html",
+                "statusCode": 200
+              },
+              {
+                "route": "/news-details",
+                "serve": "/news-details/index.html",
                 "statusCode": 200
               },
               {
@@ -82,15 +98,20 @@ jobs:
             ],
             "navigationFallback": {
               "rewrite": "/index.html",
-              "exclude": ["/assets/*"]
+              "exclude": ["/assets/*", "/*.css", "/*.js"]
+            },
+            "responseOverrides": {
+              "404": {
+                "rewrite": "/index.html"
+              }
             }
           }
           EOL
           
-          echo "Routes configuration:"
-          cat dist/deploy/routes.json
+          echo "Azure Static Web Apps configuration:"
+          cat dist/deploy/staticwebapp.config.json
 
-      - name: Deploy to Azure Static Web Apps
+      - name: Deploy to Azure
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -99,8 +120,8 @@ jobs:
           action: "upload"
           app_location: "frontend/dist/deploy"
           output_location: ""
+          routes_location: "frontend/dist/deploy/staticwebapp.config.json"
           skip_app_build: true
-          routes_location: "frontend/dist/deploy/routes.json"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
