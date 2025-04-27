@@ -36,9 +36,9 @@ jobs:
         run: |
           npm run build -- --configuration=production
           # Rename the CSR file to index.html for Azure
-          mv dist/iwa-app/browser/index.csr.html dist/iwa-app/browser/index.html
+          mv dist/iwa-app/browser/index.html dist/iwa-app/browser/index.html
           # Ensure other required files are present
-          cp dist/iwa-app/browser/index.csr.html dist/iwa-app/browser/Index.html
+          cp dist/iwa-app/browser/index.html dist/iwa-app/browser/Index.html
       
       - name: Deploy to Azure Static Web Apps
         id: builddeploy
