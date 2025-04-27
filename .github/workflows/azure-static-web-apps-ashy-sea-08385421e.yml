@@ -35,10 +35,17 @@ jobs:
         working-directory: ./frontend
         run: |
           npm run build -- --configuration=production
-          # Rename the CSR file to index.html for Azure
-          mv dist/iwa-app/browser/index.html dist/iwa-app/browser/index.html
-          # Ensure other required files are present
-          cp dist/iwa-app/browser/index.html dist/iwa-app/browser/Index.html
+          # Verify the exact output structure
+          ls -R dist/iwa-app
+          # Handle both possible output structures
+          if [ -f "dist/iwa-app/browser/index.csr.html" ]; then
+            mv dist/iwa-app/browser/index.csr.html dist/iwa-app/browser/index.html
+          elif [ -f "dist/iwa-app/index.html" ]; then
+            echo "Standard index.html found"
+          else
+            echo "Error: No index file found!"
+            exit 1
+          fi
       
       - name: Deploy to Azure Static Web Apps
         id: builddeploy
@@ -48,8 +55,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "frontend"
-          output_location: "frontend/dist/iwa-app/browser"
-          skip_app_build: true  # We already built manually
+          output_location: "frontend/dist/iwa-app"  # Try without /browser first
+          skip_app_build: true
           app_build_command: "npm run build -- --configuration=production"
 
   close_pull_request_job:
