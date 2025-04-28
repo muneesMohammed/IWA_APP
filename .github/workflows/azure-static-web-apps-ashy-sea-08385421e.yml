@@ -19,27 +19,27 @@ jobs:
         with:
           submodules: true
           lfs: false
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
-      
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm ci
-      
+
       - name: Build Angular app
         working-directory: ./frontend
         run: |
           npm run build -- --configuration=production
-          
+
           # Verify build output structure
           echo "Build output:"
           find dist/iwa-app -type f
-          
+
           # Ensure index.html exists in browser folder
           if [ -f "dist/iwa-app/browser/index.csr.html" ]; then
             mv dist/iwa-app/browser/index.csr.html dist/iwa-app/browser/index.html
@@ -52,38 +52,14 @@ jobs:
           cat > dist/iwa-app/browser/staticwebapp.config.json << 'EOL'
           {
             "routes": [
-              {
-                "route": "/",
-                "serve": "/index.html"
-              },
-              {
-                "route": "/Home",
-                "serve": "/Home/index.html"
-              },
-              {
-                "route": "/about",
-                "serve": "/about/index.html"
-              },
-              {
-                "route": "/blog",
-                "serve": "/blog/index.html"
-              },
-              {
-                "route": "/contact",
-                "serve": "/contact/index.html"
-              },
-              {
-                "route": "/news",
-                "serve": "/news/index.html"
-              },
-              {
-                "route": "/news-details",
-                "serve": "/news-details/index.html"
-              },
-              {
-                "route": "/*",
-                "serve": "/index.html"
-              }
+              { "route": "/", "serve": "/index.html" },
+              { "route": "/Home", "serve": "/Home/index.html" },
+              { "route": "/about", "serve": "/about/index.html" },
+              { "route": "/blog", "serve": "/blog/index.html" },
+              { "route": "/contact", "serve": "/contact/index.html" },
+              { "route": "/news", "serve": "/news/index.html" },
+              { "route": "/news-details", "serve": "/news-details/index.html" },
+              { "route": "/*", "serve": "/index.html" }
             ],
             "navigationFallback": {
               "rewrite": "/index.html",
@@ -96,20 +72,16 @@ jobs:
             }
           }
           EOL
-          
-          echo "Azure configuration:"
+
+          echo "Azure configuration created at dist/iwa-app/browser/staticwebapp.config.json"
           cat dist/iwa-app/browser/staticwebapp.config.json
 
       - name: Deploy to Azure Static Web Apps
-        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_SEA_08385421E }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "frontend/dist/iwa-app/browser"  # Directly use prerendered output
-          output_location: ""  # Empty because we're using the exact output structure
-          routes_location: "frontend/dist/iwa-app/prerendered-routes.json"
+          app_location: "frontend/dist/iwa-app/browser"
           skip_app_build: true
 
   close_pull_request_job:
@@ -118,7 +90,6 @@ jobs:
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_SEA_08385421E }}
