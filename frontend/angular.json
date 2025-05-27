@@ -41,7 +41,10 @@
               "assets/css/style.css",
               "assets/css/timeline.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.css",
-              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.css"
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.css",
+              "assets/css/icons.css",
+              "assets/css/animate.css",
+              "assets/css/owl.carousel.min.css"
             ],
             "scripts": [
               "assets/js/jquery.min.js",
