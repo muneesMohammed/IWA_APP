@@ -5,6 +5,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { NewsComponent } from './components/news/news.component';
 import { NewsDetailsComponent } from './components/news/news-details/news-details.component';
 import { BlogComponent } from './components/blog/blog.component';
+import { VolunteerComponent } from './components/volunteer/volunteer.component';
 
 export const routes: Routes = [
      { path: '', redirectTo:"Home",pathMatch:"full" },
@@ -14,6 +15,7 @@ export const routes: Routes = [
       { path: 'news', component: NewsComponent },
       { path: 'news-details', component: NewsDetailsComponent },
       {path: 'blog', component:BlogComponent},
+      {path:'volunteer', component:VolunteerComponent}
 ];
 
 
