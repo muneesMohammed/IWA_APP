@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.orm import Session
 import shutil
-from app.database import get_db
+from app.db.session import get_db
 from app.models.blog import Blog
 
 router = APIRouter()

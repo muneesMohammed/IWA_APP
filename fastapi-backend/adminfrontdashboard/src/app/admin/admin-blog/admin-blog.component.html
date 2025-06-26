@@ -1,0 +1,18 @@
+<div class="admin-blog-form">
+  <h2>Post New Blog</h2>
+  <input [(ngModel)]="newBlog.title" placeholder="Title" /><br />
+  <textarea [(ngModel)]="newBlog.content" placeholder="Content"></textarea><br />
+  <input [(ngModel)]="newBlog.imageUrl" placeholder="Image URL" /><br />
+  <button (click)="postBlog()">Post Blog</button>
+</div>
+
+<hr />
+
+<div class="blog-list">
+  <h2>All Blogs</h2>
+  <div *ngFor="let blog of blogs" class="blog-card">
+    <h3>{{ blog.title }}</h3>
+    <img [src]="blog.imageUrl" alt="Blog Image" style="max-width: 100px;" />
+    <p>{{ blog.content }}</p>
+  </div>
+</div>

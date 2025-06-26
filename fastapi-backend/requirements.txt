@@ -1,15 +1,28 @@
- fastapi
+fastapi
 uvicorn
 SQLAlchemy
 pydantic
 mysql-connector-python
 python-multipart
 python-dotenv
-
-
-
 PyJWT
 alembic
 pymysql  # (For MySQL, remove if using SQLite or PostgreSQL)
 psycopg2  # (For PostgreSQL, remove if using MySQL or SQLite)
-python-multipart
+
+
+
+
+
+
+
+
+
+python-jose
+passlib==1.7.4  # Explicitly specify a stable version
+sqlalchemy
+logging
+pydantic[email]
+bcrypt==4.0.1  # Use a compatible version with passlib
+pydantic-settings
+cryptography
