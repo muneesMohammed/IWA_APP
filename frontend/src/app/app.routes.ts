@@ -10,10 +10,12 @@ import { DonationComponent } from './components/donation/donation.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { EventsComponent } from './components/events/events.component';
 import { EventsDetailsComponent } from './components/events-details/events-details.component';
+import { ProgramsComponent } from './components/programs/programs.component';
+import { ProgramsDetailComponent } from './components/programs-detail/programs-detail.component';
 
 export const routes: Routes = [
-     { path: '', redirectTo:"Home",pathMatch:"full" },
-      { path: 'Home', component: HomeComponent },
+     { path: '', redirectTo:"home",pathMatch:"full" },
+      { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'news', component: NewsComponent },
@@ -23,7 +25,9 @@ export const routes: Routes = [
       {path:'donation', component:DonationComponent},
       {path:'teams', component:TeamsComponent},
       {path: 'events', component: EventsComponent},
-      {path: 'event-details', component: EventsDetailsComponent } 
+      {path: 'programs', component: ProgramsComponent},
+      {path: 'event-details', component: EventsDetailsComponent },
+      {path: 'programs-detail', component: ProgramsDetailComponent }
 ];
 
 
