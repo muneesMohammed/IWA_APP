@@ -30,7 +30,7 @@ export const routes: Routes = [
       {path: 'projects/programs', component: ProgramsComponent},
       // {path: 'event-details', component: EventsDetailsComponent },
       // {path: 'events/:id', component: EventsDetailsComponent },
-      {path: 'events/:id', component: EventsDetailsComponent, data: { renderMode: 'server'}},
+      {path: 'events/:id', component: EventsDetailsComponent,   data: { renderMode: 'client' }},
 
       {path: 'projects/programs-detail', component: ProgramsDetailComponent },
       {path: 'pages/faq', component: FaqComponent }
