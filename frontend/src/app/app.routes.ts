@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -12,6 +13,7 @@ import { EventsComponent } from './components/events/events.component';
 import { EventsDetailsComponent } from './components/events-details/events-details.component';
 import { ProgramsComponent } from './components/programs/programs.component';
 import { ProgramsDetailComponent } from './components/programs-detail/programs-detail.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 export const routes: Routes = [
      { path: '', redirectTo:"/home",pathMatch:"full" },
@@ -21,16 +23,23 @@ export const routes: Routes = [
       { path: 'news', component: NewsComponent },
       { path: 'news-details', component: NewsDetailsComponent },
       {path: 'blog', component:BlogComponent},
-      {path:'volunteer', component:VolunteerComponent},
-      {path:'donation', component:DonationComponent},
-      {path:'teams', component:TeamsComponent},
-      {path: 'events', component: EventsComponent},
-      {path: 'programs', component: ProgramsComponent},
-      {path: 'event-details', component: EventsDetailsComponent },
-      {path: 'programs-detail', component: ProgramsDetailComponent }
+      {path:'pages/volunteer', component:VolunteerComponent},
+      {path:'projects/donation', component:DonationComponent},
+      {path:'pages/teams', component:TeamsComponent},
+      {path: 'pages/events', component: EventsComponent},
+      {path: 'projects/programs', component: ProgramsComponent},
+      // {path: 'event-details', component: EventsDetailsComponent },
+      {path: 'events/:id', component: EventsDetailsComponent },
+      {path: 'projects/programs-detail', component: ProgramsDetailComponent },
+      {path: 'pages/faq', component: FaqComponent }
+
 ];
 
 
 
-
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
 
