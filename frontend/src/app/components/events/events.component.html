@@ -1,221 +1,75 @@
 
-    <section class="page-banner-wrap bg-cover" style="background-image: url('assets/img/page-banner.jpg')">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <div class="page-heading text-white">
-                        <div class="sub-title">
-                            <h4><strong>Our Mission:</strong> Food, Education, Medicine</h4>
-                        </div>
-                        <div class="page-title">
-                            <h1>Upcoming Events</h1>
-                        </div>
+<section class="page-banner-wrap bg-cover" style="background-image: url('assets/img/page-banner.jpg')">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-heading text-white">
+                    <div class="sub-title">
+                        <h4><strong>Our Mission:</strong> Food, Education, Medicine</h4>
+                    </div>
+                    <div class="page-title">
+                        <h1>Upcoming Events</h1>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">events</li>
-                        </ol>
-                    </nav>
+            </div>
+            <div class="col-md-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">events</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="upcoming-events-wrap section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12 text-center">
+                <!-- <div class="event-cat-filter mb-20"> -->
+<!-- Category Filter Buttons -->
+                <div class="event-cat-filter mb-20 text-center">
+                    <button (click)="filterByCategory('all')" [class.active]="activeCategory === 'all'">All Categories</button>
+                    <button (click)="filterByCategory('water')" [class.active]="activeCategory === 'water'">Water Day</button>
+                    <button (click)="filterByCategory('festival')" [class.active]="activeCategory === 'festival'">Festival</button>
+                    <button (click)="filterByCategory('proevent')" [class.active]="activeCategory === 'proevent'">Pro Event</button>
+                    <button (click)="filterByCategory('trending')" [class.active]="activeCategory === 'trending'">Trending</button>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="upcoming-events-wrap section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-12 text-center">
-                    <div class="event-cat-filter mb-20">
-                        <button data-filter="*" class="active">All Categories</button>
-                        <button data-filter=".water">Water Day</button>
-                        <button data-filter=".festival">Festival</button>
-                        <button data-filter=".proevent">Pro Event</button>
-                        <button data-filter=".trending">Trending</button>
-                    </div>
-                </div>
+
+    <!-- Event Cards -->
+    <div class="row grid">
+    <div class="col-12 col-lg-6 col-xl-12 grid-item" *ngFor="let event of filteredEvents">
+        <div class="single-event-ticket row align-items-center">
+        <div class="col-xl-4">
+            <div class="event-featured-cover bg-cover" [ngStyle]="{'background-image': 'url(' + event.image + ')'}">
+            <div class="event-time-address">
+                <span><i class="fal fa-calendar-alt"></i>{{ event.date }}</span>
+                <span><i class="fal fa-map-marker-alt"></i>{{ event.location }}</span>
             </div>
-
-            <div class="row grid">
-                <div class="col-12 col-lg-6 col-xl-12 water proevent grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e1.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>24th June 2020</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>NY, London</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">Project Management In The Voluntary Sector</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>                
-                <div class="col-12 col-lg-6 col-xl-12 trending water grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e2.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>24th AUG 2020</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>NY, London</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">10 Ways To Help Others That Will Lead You</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>
-                <div class="col-12 col-lg-6 col-xl-12 proevent festival grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e3.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>24th July 2021</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>NY, London</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">Helping The Church To Serve Others</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>
-                <div class="col-12 col-lg-6 col-xl-12 trending grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e4.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>14th June 2021</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>NY, London</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">Rebuilding Collapse Primary School</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>
-                <div class="col-12 col-lg-6 col-xl-12 water festival grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e5.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>28th Nov 2021</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>NY, London</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">Changing Leadership In A Changing World</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>
-                <div class="col-12 col-lg-6 col-xl-12 trending water grid-item">
-                    <div class="single-event-ticket row align-items-center">
-                        <div class="col-xl-4">
-                            <div class="event-featured-cover bg-cover" style="background-image: url('assets/img/event/e6.jpg')">
-                                <div class="event-time-address">
-                                    <span><i class="fal fa-calendar-alt"></i>15th May 2021</span>
-                                    <span><i class="fal fa-map-marker-alt"></i>Mirpur, Dhaka</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 pr-xl-0">
-                            <div class="event-info">
-                                <h2><a href="event-details.html">Charity Program In The Dhaka</a></h2>
-                                <p>Your $40.00 monthly donation can give 12 people clean water every year. 100% funds water projects.</p>
-                                <ul>
-                                    <li>A place in history</li>
-                                    <li>It’s about impact, goodness</li>
-                                    <li>More goodness in the world</li>
-                                    <li>The world we live</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 text-xl-right">
-                            <div class="event-ticket-buy">
-                                <a href="event-details.html" class="ticket-buy-btn"><i class="fal fa-home"></i>Book A Seat</a>
-                            </div>
-                        </div>
-                    </div> <!-- single-event-ticket -->
-                </div>
             </div>
-
-            <div class="row align-items-center">
+        </div>
+        <div class="col-xl-5 pr-xl-0">
+            <div class="event-info">
+            <h2><a [routerLink]="['/events', event.id]">{{ event.title }}</a></h2>
+            <p>{{ event.description }}</p>
+            <ul>
+                <li *ngFor="let point of event.points">{{ point }}</li>
+            </ul>
+            </div>
+        </div>
+        <div class="col-xl-3 text-xl-right">
+            <div class="event-ticket-buy">
+            <a [routerLink]="['/events', event.id]" class="ticket-buy-btn"><i class="fal fa-home"></i> Book A Seat</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+                <div class="row align-items-center">
                 <div class="col-12 col-lg-12 text-center">
                     <div class="causes-page-nav mt-50 causes-pages-link">
                         <ul>
@@ -229,5 +83,9 @@
                     </div><!-- /.blog-page-nav -->
                 </div> <!-- /.col-12 col-lg-12 -->  
             </div>
-        </div>
-    </section>
+</div>
+</section>
+
+
+
+
