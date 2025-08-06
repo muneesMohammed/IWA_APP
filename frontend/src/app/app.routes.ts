@@ -29,7 +29,9 @@ export const routes: Routes = [
       {path: 'pages/events', component: EventsComponent},
       {path: 'projects/programs', component: ProgramsComponent},
       // {path: 'event-details', component: EventsDetailsComponent },
-      {path: 'events/:id', component: EventsDetailsComponent },
+      // {path: 'events/:id', component: EventsDetailsComponent },
+      {path: 'events/:id', component: EventsDetailsComponent, data: { renderMode: 'server'}},
+
       {path: 'projects/programs-detail', component: ProgramsDetailComponent },
       {path: 'pages/faq', component: FaqComponent }
 
