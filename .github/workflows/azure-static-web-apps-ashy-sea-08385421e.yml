@@ -53,12 +53,15 @@ jobs:
           {
             "routes": [
               { "route": "/", "serve": "/index.html" },
-              { "route": "/Home", "serve": "/Home/index.html" },
-              { "route": "/about", "serve": "/about/index.html" },
-              { "route": "/blog", "serve": "/blog/index.html" },
-              { "route": "/contact", "serve": "/contact/index.html" },
-              { "route": "/news", "serve": "/news/index.html" },
-              { "route": "/news-details", "serve": "/news-details/index.html" },
+              { "route": "/home", "serve": "/index.html" },
+              { "route": "/about", "serve": "/index.html" },
+              { "route": "/blog", "serve": "/index.html" },
+              { "route": "/contact", "serve": "/index.html" },
+              { "route": "/news", "serve": "/index.html" },
+              { "route": "/news-details", "serve": "/index.html" },
+              { "route": "/events/*", "serve": "/index.html" },
+              { "route": "/projects/*", "serve": "/index.html" },
+              { "route": "/pages/*", "serve": "/index.html" },
               { "route": "/*", "serve": "/index.html" }
             ],
             "navigationFallback": {
@@ -71,6 +74,7 @@ jobs:
               }
             }
           }
+
           EOL
 
           echo "Azure configuration created at dist/iwa-app/browser/staticwebapp.config.json"
@@ -95,3 +99,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_SEA_08385421E }}
           action: "close"
+
